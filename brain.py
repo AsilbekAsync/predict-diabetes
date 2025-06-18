@@ -18,10 +18,7 @@ def get_result(arr):
     input_df = pd.DataFrame([arr], columns=X_columns)
     input_scaled = scaler.transform(input_df)
     
-    proba = model.predict_proba(input_scaled)[0][1]
     prediction = model.predict(input_scaled)[0]
-
     return {
-        'prediction': bool(prediction),
-        'probability': round(proba * 100, 2)
+        'prediction': bool(prediction)
     }

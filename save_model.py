@@ -6,7 +6,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.impute import KNNImputer
 from imblearn.over_sampling import SMOTE
 import joblib
+import os
 
+os.makedirs('model', exist_ok=True)
 df = pd.read_csv('data/data.csv')
 
 ZERO_COLS = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']

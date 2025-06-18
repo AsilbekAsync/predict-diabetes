@@ -5,7 +5,8 @@ scaler = joblib.load('model/scaler.joblib')
 model = joblib.load('model/model.joblib')
 median_values = joblib.load('model/imputer.joblib')
 
-X_columns = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']
+X_columns = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 
+             'DiabetesPedigreeFunction', 'Age']
 ZERO_COLS = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']
 
 def get_result(arr):
@@ -16,6 +17,11 @@ def get_result(arr):
 
     input_df = pd.DataFrame([arr], columns=X_columns)
     input_scaled = scaler.transform(input_df)
+    
+    proba = model.predict_proba(input_scaled)[0][1]
     prediction = model.predict(input_scaled)[0]
 
-    return bool(prediction)
+    return {
+        'prediction': bool(prediction),
+        'probability': round(proba * 100, 2)
+    }

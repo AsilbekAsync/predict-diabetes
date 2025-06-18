@@ -90,7 +90,12 @@ def show_result():
     ]
 
     result = get_result(data)
-    return render_template('result.html', data = data, result = result)
+    return render_template(
+        'result.html',
+        data = data,
+        result = result['prediction'],
+        probability = result['probability']
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)
